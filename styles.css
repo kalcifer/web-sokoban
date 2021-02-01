@@ -1,0 +1,24 @@
+#gameScreen {
+    display:grid;
+    width: 300px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-gap:5px
+}
+
+#gameScreen > div {
+    text-align: center;
+    vertical-align: center;
+}
+
+.position {
+    background-color: red;
+}
+
+.box {
+    color: brown
+}
+
+.hero {
+    border: 4px solid purple
+}
