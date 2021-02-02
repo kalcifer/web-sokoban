@@ -89,12 +89,17 @@ const move = (boardObj, key) => {
 };
 
 const listenToUser = (gameSection, boardObj) => (event) => {
-  const key = event.key;
+  let key = event.key;
+
+  if (event.target?.tagName === "BUTTON") {
+    key = event.target.value;
+  }
+
   let gameBoard;
 
   let changed = false;
   const length = allMoves.length;
-  if (key === "Enter") {
+  if (key === "Enter" || key === "Start") {
     changed = true;
     const boardObjCopy = [...boardObj];
     allMoves.push(boardObjCopy);
@@ -108,8 +113,8 @@ const listenToUser = (gameSection, boardObj) => (event) => {
     const boardObjCopy = [...boardObj];
     allMoves.push(boardObjCopy);
   } else if (
-    event.metaKey === true &&
-    (key === "z" || key === "Z") &&
+    (key === "Undo" ||
+      (event.metaKey === true && (key === "z" || key === "Z"))) &&
     length > 1
   ) {
     changed = true;
@@ -129,6 +134,7 @@ const main = (gameSection) => {
   const dimension = getDimension(level);
   let boardObj = parseBoard(level, dimension);
   document.addEventListener("keydown", listenToUser(gameSection, boardObj));
+  document.addEventListener("click", listenToUser(gameSection, boardObj));
 };
 
 document.addEventListener("DOMContentLoaded", () => {
