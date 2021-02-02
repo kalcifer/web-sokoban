@@ -10,6 +10,7 @@ export const parseBoard = (board, dimension) => {
   }
   return boardObj;
 };
+
 const getElem = (elem, x, y) => {
   switch (elem) {
     case "x":
@@ -20,35 +21,60 @@ const getElem = (elem, x, y) => {
       };
     case "o":
       return {
-        type: "blank",
+        type: "square",
         x,
         y,
+        fill: { type: "none" },
+        position: false,
       };
     case "h":
       return {
-        type: "hero",
+        type: "square",
         x,
         y,
+        fill: { type: "hero" },
+        position: false,
       };
     case "b":
       return {
-        type: "box",
+        type: "square",
         x,
         y,
+        fill: { type: "box" },
+        position: false,
       };
     case "p":
       return {
-        type: "position",
+        type: "square",
         x,
         y,
-        state: 0,
+        fill: { type: "none" },
+        position: true,
+      };
+    case "hp":
+      return {
+        type: "square",
+        x,
+        y,
+        fill: { type: "hero" },
+        position: true,
+      };
+    case "bp":
+      return {
+        type: "square",
+        x,
+        y,
+        fill: { type: "box" },
+        position: true,
       };
   }
 };
 
 export const createBoardHTML = (boardObj) => {
   const board = boardObj.map((elem) => {
-    return `<div class="${elem.type}">${elem.type}</div>`;
+    const type = elem.fill ? elem.fill.type : elem.type;
+    const position = elem.position;
+    return `<div class="${type} ${position ? "position" : ""}">${type}</div>`;
   });
   return board.join(" ");
 };

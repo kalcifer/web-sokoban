@@ -1,24 +1,34 @@
 #gameScreen {
     display:grid;
     width: 300px;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(14, 1fr);
+    grid-template-rows: repeat(14, 1fr);
     grid-gap:5px
 }
 
 #gameScreen > div {
     text-align: center;
     vertical-align: center;
+    width: 50px;
+    box-sizing: border-box;
 }
 
 .position {
     background-color: red;
 }
 
+.none {
+    color: white
+}
 .box {
-    color: brown
+    background-color: moccasin;
+    color: moccasin
 }
 
 .hero {
     border: 4px solid purple
+}
+
+.wall {
+    background-color: black;
 }
