@@ -74,7 +74,22 @@ export const createBoardHTML = (boardObj) => {
   const board = boardObj.map((elem) => {
     const type = elem.fill ? elem.fill.type : elem.type;
     const position = elem.position;
-    return `<div class="${type} ${position ? "position" : ""}">${type}</div>`;
+    if (elem.fill?.type === "hero") {
+      return `<img src="./happycat.png" />`;
+    } else if (elem.type === "wall") {
+      return `<img src="./GroundGravel_Grass.png" />`;
+    } else if (elem.fill?.type === "box") {
+      return `<img src="./CrateDark_Red.png" class=${
+        position ? "glow" : ""
+      } />`;
+    } else if (elem.position && elem.fill?.type === "none") {
+      return `<img src='./EndPoint_Red.png' class='xs' />`;
+    }
+    return `<div class="${type} ${
+      position ? (elem.fill?.type === "box" ? "box" : "position") : ""
+    }"></div>`;
   });
+  // if (hasWon(boardObj)) {
+  // }
   return board.join(" ");
 };

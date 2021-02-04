@@ -1,34 +1,43 @@
+.body {
+    width: 100vw;
+}
+
 #gameScreen {
     display:grid;
-    width: 300px;
-    grid-template-columns: repeat(14, 1fr);
-    grid-template-rows: repeat(14, 1fr);
-    grid-gap:5px
+    justify-content: center;
+    grid-template-columns: repeat(14, 3em);
+    grid-template-rows: repeat(14, 3em);
+    margin-top: 10em;
 }
 
-#gameScreen > div {
-    text-align: center;
-    vertical-align: center;
-    width: 50px;
-    box-sizing: border-box;
-}
 
 .position {
-    background-color: red;
+    background-color: #EB5056;
+    opacity: 0.1
+   
 }
 
 .none {
-    color: white
+    
 }
 .box {
-    background-color: moccasin;
-    color: moccasin
+    background-color: #EB5056;
 }
 
 .hero {
-    border: 4px solid purple
+    border: 4px solid purple;
 }
 
 .wall {
-    background-color: black;
+    background-color: #6D9773;    
 }
+
+img {
+    height: auto;
+    width: 3em;
+}
+.xs {
+    width: 1em;
+    margin:auto;
+}
+
