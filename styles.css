@@ -2,6 +2,11 @@
     width: 100vw;
 }
 
+.header {
+    display: flex;
+    justify-content: center;
+}
+
 #gameScreen {
     display:grid;
     justify-content: center;
@@ -17,9 +22,25 @@
    
 }
 
-.none {
+.glow {
+      /* These three properties are where the magic happens: */
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 4px hsl(34deg 100% 95%);
+  filter: 
+    drop-shadow(0px 2px 2px hsl(0deg 0% 0% / 0.5))
+    drop-shadow(0px 0px 4px hsl(34deg 100% 95% / 0.5))
+    drop-shadow(0px 0px 10px hsl(34deg 100% 95% / 0.5))
     
+
+ 
+  
+  /* Misc aesthetic properties
+  font-size: 96px;
+  font-weight: 900;
+  font-family: 'Raleway', sans-serif;
+  letter-spacing: -1px; */
 }
+
 .box {
     background-color: #EB5056;
 }
@@ -39,5 +60,10 @@ img {
 .xs {
     width: 1em;
     margin:auto;
+}
+
+.center {
+    display:flex;
+    justify-content: center;
 }
 
