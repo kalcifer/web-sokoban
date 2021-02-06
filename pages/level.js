@@ -114,13 +114,14 @@ const listenToUser = (event, boardObj, noOfMoves) => {
   } else if (
     (key === "Undo" ||
       (event.metaKey === true && (key === "z" || key === "Z"))) &&
-    noOfMoves > 1
+    noOfMoves > 0
   ) {
-    changed = true;
-    return { changed, undo: true };
+    return { changed: true, undo: true };
   }
+  return { changed: false, undo: false };
 };
 
+// https://usehooks.com/useEventListener/
 function useEventListener(eventName, handler, element = window) {
   // Create a ref that stores handler
   const savedHandler = useRef();
@@ -159,19 +160,23 @@ const Level = ({ levelNo = 2 }) => {
   const { level, dimension } = getLevel(levelNo);
   const boardObj = parseBoard(level, dimension);
   const [boardState, setState] = useState(boardObj);
-  const allMoves = useRef([]);
+  const allMoves = useRef([boardState]);
   const handleEvent = (event) => {
-    const { changed, newState, undo } = listenToUser(
+    let { changed, newState, undo } = listenToUser(
       event,
       boardState,
       allMoves.current.length
     );
     if (changed) {
       if (undo) {
-        newState = allMoves.current.pop();
+        if (allMoves.current.length > 1) {
+          allMoves.current.pop();
+          newState = allMoves.current[allMoves.current.length - 1];
+        }
       } else {
         allMoves.current.push(newState);
       }
+      console.log({ length: allMoves.current.length, allMoves });
       setState(newState);
     }
   };
@@ -179,7 +184,7 @@ const Level = ({ levelNo = 2 }) => {
   useEventListener("keydown", handleEvent);
   return html`<div>
     <${Header} />
-    <div id="gameScreen" onClick="${handleEvent}">
+    <div id="gameScreen">
       ${boardState.map((elem) => {
         const type = elem.fill ? elem.fill.type : elem.type;
         const position = elem.position;
