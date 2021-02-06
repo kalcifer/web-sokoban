@@ -6,11 +6,11 @@ const html = htm.bind(h);
 
 const Header = () => {
   return html`<header class="header">
-    <div>
+    <div class="relativeheading">
       <h2>Sokoban</h2>
-      <div>With Belli</div>
+      <div class="underheading">With Belli</div>
     </div>
-    <div>
+    <div class="besideheading">
       <img src="../happycat.png" />
     </div>
   </header>`;

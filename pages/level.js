@@ -184,7 +184,11 @@ const Level = ({ levelNo = 2 }) => {
   useEventListener("keydown", handleEvent);
   return html`<div>
     <${Header} />
-    <div id="gameScreen">
+    <div
+      id="gameScreen"
+      style="grid-template-columns: repeat(${dimension.y}, 4em);
+    grid-template-rows: repeat(${dimension.x}, 4em);"
+    >
       ${boardState.map((elem) => {
         const type = elem.fill ? elem.fill.type : elem.type;
         const position = elem.position;
