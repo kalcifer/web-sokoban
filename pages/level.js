@@ -213,6 +213,35 @@ const Level = ({ levelNo = 2 }) => {
         ></div>`;
       })}
     </div>
+    <div class="actionSection">
+      <div class="moves">
+        <span>Moves</span>
+        <span>${allMoves.current.length - 1}</span>
+      </div>
+      <div class="buttons">
+        <div>
+          <button class="undo" onClick=${handleEvent} value="Undo">Undo</button>
+        </div>
+        <div class="directionSet">
+          <div>
+            <button class="up" onClick=${handleEvent} value="ArrowUp">
+              Up
+            </button>
+          </div>
+          <div>
+            <button class="left" onClick=${handleEvent} value="ArrowLeft">
+              Left
+            </button>
+            <button class="down" onClick=${handleEvent} value="ArrowDown">
+              Down
+            </button>
+            <button class="right" onClick=${handleEvent} value="ArrowRight">
+              Right
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>`;
 };
 
