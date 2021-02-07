@@ -39,9 +39,14 @@
     font-size: 2em;
     font-family: 'Press Start 2P';
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     grid-column-gap: 1em;
     justify-content: center;
+    text-align: center;
+    border: 5px solid #6D9773;
+    padding: 1em;
+    width: 8em;
+    margin:auto;
 }
 
 .buttons {
@@ -132,5 +137,29 @@ h2 {
     font-family: 'Press Start 2P', cursive;
     font-size: 3rem;
     color: #6D9773
+}
+
+.homecontent {
+    display:grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    width:100%;
+}
+
+.buttonContainer{
+    width:100%;
+    text-align:center;
+}
+
+.startButton {
+    width: 10em;
+    border-radius: 2%;
+    margin-top:5em;
+}
+
+.separator {
+    margin-top:3em;
+    border-top: 3px solid #bbb;
+    width:100%;
 }
 

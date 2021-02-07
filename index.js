@@ -2,21 +2,21 @@
 
 import { h, render } from "https://unpkg.com/preact@latest?module";
 import htm from "https://unpkg.com/htm@latest/dist/htm.module.js?module";
-import { Router } from "https://unpkg.com/preact-router@latest?module";
 import Home from "./pages/home.js";
 import About from "./pages/about.js";
 import Levels from "./pages/levels.js";
 import Level from "./pages/level.js";
+import { useLocalStorage } from "./hooks.js";
 
 const html = htm.bind(h);
 
 const Main = () => {
-  return html`<${Router}>
-    <${Level} path="/" />
-    <${About} path="/about" />
-    <${Levels} path="/levels"/>
-    <${Level} path="/level/:levelNo"/>
-  </${Router}>`;
+  const [level, setLevel] = useLocalStorage("level", 0);
+  if (level === 0) {
+    return html`<${Home} setLevel=${setLevel} />`;
+  } else {
+    return html`<${Level} levelNo=${level} />`;
+  }
 };
 
 render(h(Main), document.body);

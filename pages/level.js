@@ -2,12 +2,18 @@ import { h, render } from "https://unpkg.com/preact@latest?module";
 import {
   useState,
   useRef,
-  useEffect,
 } from "https://unpkg.com/preact@latest/hooks/dist/hooks.module.js?module";
 import htm from "https://unpkg.com/htm@latest/dist/htm.module.js?module";
 import { Header } from "../components/header.js";
+import About from "./about.js";
+import Square from "../components/square.js";
 import { parseBoard } from "../board.js";
 import { getLevel, getDimension } from "../levels.js";
+import confetti, {
+  create,
+} from "https://cdn.jsdelivr.net/npm/canvas-confetti@0.2.0-beta0/dist/confetti.module.mjs";
+import { useEventListener } from "../hooks.js";
+
 const html = htm.bind(h);
 
 const getNextObj = (mainObj, direction, boardObj) => {
@@ -32,6 +38,7 @@ const move = (boardObj, key) => {
   const hero = boardObj.filter(
     (obj) => obj.type === "square" && obj.fill.type === "hero"
   )[0];
+
   const nextObj = getNextObj(hero, key, boardObj);
   if (nextObj && nextObj.type === "wall") {
     return { boardObj, changed: false };
@@ -109,66 +116,40 @@ const listenToUser = (event, boardObj, noOfMoves) => {
     const result = move(boardObj, key);
     changed = result.changed;
     boardObj = result.boardObj;
+    const positionsLeft = boardObj.filter((elem) => {
+      return (
+        elem.type === "square" &&
+        elem.position === true &&
+        elem.fill?.type === "none"
+      );
+    });
+    const win = positionsLeft.length === 0;
     const boardObjCopy = [...boardObj];
-    return { changed, newState: boardObjCopy, undo: false };
+    return { changed, newState: boardObjCopy, undo: false, win };
   } else if (
     (key === "Undo" ||
       (event.metaKey === true && (key === "z" || key === "Z"))) &&
     noOfMoves > 0
   ) {
-    return { changed: true, undo: true };
+    return { changed: true, undo: true, win: false };
   }
-  return { changed: false, undo: false };
+  return { changed: false, undo: false, win: false };
 };
 
-// https://usehooks.com/useEventListener/
-function useEventListener(eventName, handler, element = window) {
-  // Create a ref that stores handler
-  const savedHandler = useRef();
-
-  // Update ref.current value if handler changes.
-  // This allows our effect below to always get latest handler ...
-  // ... without us needing to pass it in effect deps array ...
-  // ... and potentially cause effect to re-run every render.
-  useEffect(() => {
-    savedHandler.current = handler;
-  }, [handler]);
-
-  useEffect(
-    () => {
-      // Make sure element supports addEventListener
-      // On
-      const isSupported = element && element.addEventListener;
-      if (!isSupported) return;
-
-      // Create event listener that calls handler function stored in ref
-      const eventListener = (event) => savedHandler.current(event);
-
-      // Add event listener
-      element.addEventListener(eventName, eventListener);
-
-      // Remove event listener on cleanup
-      return () => {
-        element.removeEventListener(eventName, eventListener);
-      };
-    },
-    [eventName, element] // Re-run if eventName or element changes
-  );
-}
-
-const Level = ({ levelNo = 2 }) => {
+const Level = ({ levelNo = 1 }) => {
   const { level, dimension } = getLevel(levelNo);
   const boardObj = parseBoard(level, dimension);
   const [boardState, setState] = useState(boardObj);
   const allMoves = useRef([boardState]);
+  let win = false;
   const handleEvent = (event) => {
-    let { changed, newState, undo } = listenToUser(
-      event,
-      boardState,
-      allMoves.current.length
-    );
-    if (changed) {
-      if (undo) {
+    event.preventDefault();
+    let actionObject = listenToUser(event, boardState, allMoves.current.length);
+    let newState = actionObject.newState;
+    win = actionObject.win;
+
+    if (actionObject.changed) {
+      if (actionObject.undo) {
         if (allMoves.current.length > 1) {
           allMoves.current.pop();
           newState = allMoves.current[allMoves.current.length - 1];
@@ -184,6 +165,10 @@ const Level = ({ levelNo = 2 }) => {
   useEventListener("keydown", handleEvent);
   return html`<div>
     <${Header} />
+    <div class="moves">
+      <span>Moves</span>
+      <span>${allMoves.current.length - 1}</span>
+    </div>
     <div
       id="gameScreen"
       style="grid-template-columns: repeat(${dimension.y}, 4em);
@@ -192,32 +177,10 @@ const Level = ({ levelNo = 2 }) => {
       ${boardState.map((elem) => {
         const type = elem.fill ? elem.fill.type : elem.type;
         const position = elem.position;
-        if (elem.fill?.type === "hero") {
-          return html`<img src="./happycat.png" />`;
-        } else if (elem.type === "wall") {
-          return html`<img src="./GroundGravel_Grass.png" />`;
-        } else if (elem.fill?.type === "box") {
-          return html`<img
-            src="./CrateDark_Red.png"
-            class=${position ? "glow" : ""}
-          />`;
-        } else if (elem.position && elem.fill?.type === "none") {
-          return html`<img src="./EndPoint_Red.png" class="xs" />`;
-        }
-        return html`<div
-          class="${type} ${position
-            ? elem.fill?.type === "box"
-              ? "box"
-              : "position"
-            : ""}"
-        ></div>`;
+        return html`<${Square} elem=${elem} />`;
       })}
     </div>
     <div class="actionSection">
-      <div class="moves">
-        <span>Moves</span>
-        <span>${allMoves.current.length - 1}</span>
-      </div>
       <div class="buttons">
         <div>
           <button class="undo" onClick=${handleEvent} value="Undo">Undo</button>
@@ -242,6 +205,9 @@ const Level = ({ levelNo = 2 }) => {
         </div>
       </div>
     </div>
+    ${win ? html`<div>yaya</div>` : ""}
+    <div class="separator" />
+    <${About} />
   </div>`;
 };
 
