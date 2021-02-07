@@ -8,6 +8,7 @@ import { Header } from "../components/header.js";
 import About from "./about.js";
 import Square from "../components/square.js";
 import Win from "../components/win.js";
+import Goto from "../components/goto.js";
 import { parseBoard } from "../board.js";
 import { getLevel, getDimension } from "../levels.js";
 import { useEventListener, useLocalStorage } from "../hooks.js";
@@ -134,7 +135,7 @@ const listenToUser = (event, boardObj, noOfMoves) => {
   return { changed: false, undo: false, win: false };
 };
 
-const Level = ({ levelNo = 1 }) => {
+const Level = ({ levelNo = 1, setLevel }) => {
   const { level, dimension } = getLevel(levelNo);
   const boardObj = parseBoard(level, dimension);
   const [boardState, setState] = useState(boardObj);
@@ -214,6 +215,7 @@ const Level = ({ levelNo = 1 }) => {
           </div>
         </div>
       </div>
+      <${Goto} />
     </div>
     ${win ? html`<${Win} />` : ""}
     <div class="separator" />

@@ -19,4 +19,4 @@ const Main = () => {
   }
 };
 
-render(h(Main), document.body);
+render(h(Main), document.getElementById("main"));
