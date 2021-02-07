@@ -12,7 +12,10 @@ const Home = ({ setLevel }) => {
   return html`<div>
     <${Header} />
     <div class="homecontent">
-      <${About} />
+      <p class="abouttext hometext">
+        <a href="">Sokoban</a> japanese for 'warehouse keeper'. This puzzle game
+        was originally invented in Japan in the early 80's.
+      </p>
       <div class="buttonContainer">
         <button class="wideButton" value="Start" onClick=${handleEvent}>
           Start Game

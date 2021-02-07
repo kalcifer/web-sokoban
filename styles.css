@@ -1,4 +1,5 @@
 .body {
+    min-height: 100%;
     width: 100vw;
     background-color: #EAF1EA;
 }
@@ -15,7 +16,7 @@
     position: absolute;
     right:0;
     margin-top:-2.5em;
-    font-family: cursive;
+    font-family: Montserrat, sans-serif;
 }
 
 .besideheading {
@@ -203,4 +204,36 @@ h2 {
     font-family: 'Press Start 2P';
     background:white;
     color:#6D9773
+}
+.abouttext {
+    font-size: 1.5em;
+    font-family: Montserrat, sans-serif;
+    line-height: 1.5em;
+}
+
+.hometext {
+    border: 4px solid #6D9773;
+    padding: 1em;  
+}
+
+a{
+    color:#6D9773
+}
+
+.footer {
+    border-top: 5px solid #6D9773;
+    clear: both;
+    position: relative;
+}
+
+.footer > p{
+    font-size: 1em;
+    text-align: center;
+}
+
+.footer .buttonContainer {
+    justify-content: center;
+}
+.footer .buttonContainer .wideButton{
+    margin-top:0px;
 }

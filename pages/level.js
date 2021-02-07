@@ -10,7 +10,7 @@ import Square from "../components/square.js";
 import Win from "../components/win.js";
 import { parseBoard } from "../board.js";
 import { getLevel, getDimension } from "../levels.js";
-import { useEventListener } from "../hooks.js";
+import { useEventListener, useLocalStorage } from "../hooks.js";
 
 const html = htm.bind(h);
 
@@ -142,6 +142,9 @@ const Level = ({ levelNo = 1 }) => {
   const [win, setWinState] = useState(false);
   const handleEvent = (event) => {
     event.preventDefault();
+    if (event.target.value === "Restart") {
+      window.location.reload();
+    }
     if (!win) {
       let actionObject = listenToUser(
         event,
@@ -188,6 +191,9 @@ const Level = ({ levelNo = 1 }) => {
       <div class="buttons">
         <div>
           <button class="undo" onClick=${handleEvent} value="Undo">Undo</button>
+          <button class="restart" onClick=${handleEvent} value="Restart">
+            Restart
+          </button>
         </div>
         <div class="directionSet">
           <div>
