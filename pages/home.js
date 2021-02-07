@@ -14,7 +14,7 @@ const Home = ({ setLevel }) => {
     <div class="homecontent">
       <${About} />
       <div class="buttonContainer">
-        <button class="startButton" value="Start" onClick=${handleEvent}>
+        <button class="wideButton" value="Start" onClick=${handleEvent}>
           Start Game
         </button>
       </div>

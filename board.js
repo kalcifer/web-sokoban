@@ -67,5 +67,11 @@ const getElem = (elem, x, y) => {
         fill: { type: "box" },
         position: true,
       };
+    case "blank":
+      return {
+        type: "blank",
+        x,
+        y,
+      };
   }
 };

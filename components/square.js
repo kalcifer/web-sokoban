@@ -16,6 +16,8 @@ const Square = ({ elem }) => {
     />`;
   } else if (elem.position && elem.fill?.type === "none") {
     return html`<img src="../EndPoint_Red.png" class="xs" />`;
+  } else if (elem.type === "blank") {
+    return html`<div />`;
   }
   return html`<div
     class="${elem.type} ${elem.position

@@ -7,11 +7,9 @@ import htm from "https://unpkg.com/htm@latest/dist/htm.module.js?module";
 import { Header } from "../components/header.js";
 import About from "./about.js";
 import Square from "../components/square.js";
+import Win from "../components/win.js";
 import { parseBoard } from "../board.js";
 import { getLevel, getDimension } from "../levels.js";
-import confetti, {
-  create,
-} from "https://cdn.jsdelivr.net/npm/canvas-confetti@0.2.0-beta0/dist/confetti.module.mjs";
 import { useEventListener } from "../hooks.js";
 
 const html = htm.bind(h);
@@ -120,7 +118,7 @@ const listenToUser = (event, boardObj, noOfMoves) => {
       return (
         elem.type === "square" &&
         elem.position === true &&
-        elem.fill?.type === "none"
+        elem.fill?.type !== "box"
       );
     });
     const win = positionsLeft.length === 0;
@@ -141,24 +139,30 @@ const Level = ({ levelNo = 1 }) => {
   const boardObj = parseBoard(level, dimension);
   const [boardState, setState] = useState(boardObj);
   const allMoves = useRef([boardState]);
-  let win = false;
+  const [win, setWinState] = useState(false);
   const handleEvent = (event) => {
     event.preventDefault();
-    let actionObject = listenToUser(event, boardState, allMoves.current.length);
-    let newState = actionObject.newState;
-    win = actionObject.win;
+    if (!win) {
+      let actionObject = listenToUser(
+        event,
+        boardState,
+        allMoves.current.length
+      );
+      let newState = actionObject.newState;
+      setWinState(actionObject.win);
 
-    if (actionObject.changed) {
-      if (actionObject.undo) {
-        if (allMoves.current.length > 1) {
-          allMoves.current.pop();
-          newState = allMoves.current[allMoves.current.length - 1];
+      if (actionObject.changed) {
+        if (actionObject.undo) {
+          if (allMoves.current.length > 1) {
+            allMoves.current.pop();
+            newState = allMoves.current[allMoves.current.length - 1];
+          }
+        } else {
+          allMoves.current.push(newState);
         }
-      } else {
-        allMoves.current.push(newState);
+        console.log({ length: allMoves.current.length, allMoves });
+        setState(newState);
       }
-      console.log({ length: allMoves.current.length, allMoves });
-      setState(newState);
     }
   };
 
@@ -205,7 +209,7 @@ const Level = ({ levelNo = 1 }) => {
         </div>
       </div>
     </div>
-    ${win ? html`<div>yaya</div>` : ""}
+    ${win ? html`<${Win} />` : ""}
     <div class="separator" />
     <${About} />
   </div>`;
