@@ -215,8 +215,8 @@ const Level = ({ levelNo = 1, setLevel }) => {
           </div>
         </div>
       </div>
-      <${Goto} />
     </div>
+    <${Goto} />
     ${win ? html`<${Win} />` : ""}
     <div class="separator" />
     <${About} />

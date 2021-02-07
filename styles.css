@@ -262,3 +262,7 @@ a{
     margin:auto;
     margin-top: 2em;
 }
+.actionSection button {
+    width: 6em;
+    height:6em;
+}
