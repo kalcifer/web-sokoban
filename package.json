@@ -1,0 +1,24 @@
+{
+  "name": "sokobelli",
+  "version": "1.0.0",
+  "description": "A sokoban with my cat",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalcifer/web-sokoban.git"
+  },
+  "author": "pkodmad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kalcifer/web-sokoban/issues"
+  },
+  "homepage": "https://github.com/kalcifer/web-sokoban#readme",
+  "dependencies": {
+    "vite": "^2.0.0-beta.69"
+  }
+}

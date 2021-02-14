@@ -2,6 +2,8 @@ import { h, render } from "https://unpkg.com/preact@latest?module";
 import { useState } from "https://unpkg.com/preact@latest/hooks/dist/hooks.module.js?module";
 import htm from "https://unpkg.com/htm@latest/dist/htm.module.js?module";
 import { useLocalStorage } from "../hooks.js";
+import HappyCat from "../imgs/happycat.png";
+
 const html = htm.bind(h);
 
 const Win = () => {
@@ -18,7 +20,7 @@ const Win = () => {
   };
   return html`<div class="modal">
     <div class="wincenter">
-      <div><img src="../happycat.png" class="winImage" /></div>
+      <div><img src=${HappyCat} class="winImage" /></div>
       <div class="winmsg">
         ${level < 7 ? "Level completed!" : "Game finished!"}
       </div>
